@@ -10,9 +10,11 @@
 
 import type * as auth from "../auth.js";
 import type * as comments from "../comments.js";
+import type * as constants from "../constants.js";
 import type * as http from "../http.js";
 import type * as posts from "../posts.js";
 import type * as presence from "../presence.js";
+import type * as reactions from "../reactions.js";
 
 import type {
   ApiFromModules,
@@ -23,9 +25,11 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   comments: typeof comments;
+  constants: typeof constants;
   http: typeof http;
   posts: typeof posts;
   presence: typeof presence;
+  reactions: typeof reactions;
 }>;
 
 /**

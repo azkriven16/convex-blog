@@ -8,6 +8,8 @@ export const createPost = mutation({
     title: v.string(),
     body: v.string(),
     imageStorageId: v.id("_storage"),
+    componentName: v.string(),
+    tags: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
     const user = await authComponent.safeGetAuthUser(ctx);
@@ -19,6 +21,8 @@ export const createPost = mutation({
       body: args.body,
       authorId: user._id,
       imageStorageId: args.imageStorageId,
+      componentName: args.componentName,
+      tags: args.tags,
     });
 
     return blogArticle;

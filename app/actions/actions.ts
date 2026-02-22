@@ -47,6 +47,8 @@ export async function createBlogAction(data: z.infer<typeof postSchema>) {
         body: parsed.data.content,
         title: parsed.data.title,
         imageStorageId: storageId,
+        componentName: parsed.data.componentName,
+        tags: parsed.data.tags,
       },
       {
         token,

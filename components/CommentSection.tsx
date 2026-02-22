@@ -2,26 +2,21 @@
 import { commentSchema } from "@/app/schemas/comment";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { formatDate } from "@/lib/format-date";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Preloaded,
-  useMutation,
-  usePreloadedQuery,
-  useQuery,
-} from "convex/react";
+import { Preloaded, useMutation, usePreloadedQuery } from "convex/react";
 import { Loader2Icon, MessageCircleIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
-import { Textarea } from "./ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { formatDate } from "@/lib/format-date";
 import { Separator } from "./ui/separator";
+import { Textarea } from "./ui/textarea";
 
 export function CommentSection(props: {
   preloadedComments: Preloaded<typeof api.comments.getCommentsByPostId>;

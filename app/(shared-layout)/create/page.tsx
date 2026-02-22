@@ -38,6 +38,8 @@ export default function CreatePage() {
       title: "",
       content: "",
       image: undefined,
+      componentName: "",
+      tags: [],
     },
   });
 
@@ -100,6 +102,55 @@ export default function CreatePage() {
                       {...field}
                     />
 
+                    {fieldState.error && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <Controller
+                name="componentName"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel>Compnent Name</FieldLabel>
+                    <Textarea
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter name"
+                      {...field}
+                    />
+
+                    {fieldState.error && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
+
+            <FieldGroup>
+              <Controller
+                name="tags"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel>Tags</FieldLabel>
+                    <Input
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter tags (comma separated)"
+                      value={field.value?.join(", ") ?? ""}
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.value
+                            .split(",")
+                            .map((tag) => tag.trim())
+                            .filter(Boolean),
+                        )
+                      }
+                    />
                     {fieldState.error && (
                       <FieldError errors={[fieldState.error]} />
                     )}

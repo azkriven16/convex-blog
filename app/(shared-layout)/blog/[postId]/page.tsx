@@ -1,5 +1,6 @@
 import { CommentSection } from "@/components/CommentSection";
 import PostPresence from "@/components/PostPresence";
+import Reactions from "@/components/Reactions";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { api } from "@/convex/_generated/api";
@@ -43,11 +44,13 @@ export default async function PostDetailsPage({ params }: PostDetailsProps) {
 
   const token = await getToken();
 
-  const [post, preloadedComments, userId] = await Promise.all([
-    await fetchQuery(api.posts.getPostById, { postId }),
-    await preloadQuery(api.comments.getCommentsByPostId, { postId }),
-    await fetchQuery(api.presence.getUserId, {}, { token }),
-  ]);
+  const [post, preloadedComments, preloadedReactions, userId] =
+    await Promise.all([
+      await fetchQuery(api.posts.getPostById, { postId }),
+      preloadQuery(api.comments.getCommentsByPostId, { postId }, { token }),
+      preloadQuery(api.reactions.getReactionByPostId, { postId }, { token }),
+      await fetchQuery(api.presence.getUserId, {}, { token }),
+    ]);
 
   if (!userId) {
     return redirect("/auth/sign-in");
@@ -89,6 +92,8 @@ export default async function PostDetailsPage({ params }: PostDetailsProps) {
           </p>
           <Separator orientation="vertical" />
           {userId && <PostPresence roomId={post._id} userId={userId} />}
+          <Separator orientation="vertical" />
+          {userId && <Reactions preloadedReactions={preloadedReactions} />}
         </div>
         <Separator className="my-8" />
         <p className="text-lg leading-relaxed text-foreground/90">
